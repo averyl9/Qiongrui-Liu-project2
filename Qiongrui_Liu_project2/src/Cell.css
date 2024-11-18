@@ -1,0 +1,30 @@
+.cell {
+  width: 30px;
+  height: 30px;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.cell.unselected {
+  background-color: lightgray;
+}
+
+.cell.revealed {
+  background-color: rgb(178, 208, 243);
+}
+
+.cell.mine {
+  background-color: red;
+  color: white;
+}
+
+.cell:hover {
+  background-color: #acaaaa;
+}
+
+.cell.flagged {
+  background-color: rgb(249, 190, 42);
+}
