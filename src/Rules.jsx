@@ -12,7 +12,8 @@ const Rules = () => (
                     <li>Number: a number of cells around (vertically, horizontally, or orthogonally) 
                         the selectedhas the indicated number of mines.</li>
                     <li>Bomb: Clicking a mine ends the game.</li>
-                    <li>Flag a bomb: put a flag on a board to indicate that they think a mine is at that spot.</li>
+                    <li>Flag a bomb: You can use rightClick to put a flag on a board to indicate that they think a mine is at that spot.</li>
+                    <li>Note: when you believe the cell that you already flagged is safe cell, you can just click the it.</li>
                 </ul>
             </div>
         </div>

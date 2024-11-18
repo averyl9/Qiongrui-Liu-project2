@@ -18,5 +18,21 @@
   display: grid;
   gap: 2px;
   justify-content: center;
+  margin: 0 auto;
+  max-width: 20%;
 }
+
+@media screen and (max-width: 768px) {
+  .GameBoard {
+    max-width: 30%;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .GameBoard {
+    max-width: 30%;
+  }
+}
+
+
  

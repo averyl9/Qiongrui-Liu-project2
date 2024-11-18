@@ -13,6 +13,9 @@ const Game = () => {
     flagCount,
   } = useContext(GameContext);
 
+  const rows = gameBoard.length;
+  const cols = gameBoard[0]?.length || 0;
+
   return (
     <div className="GameContainer">
       <div className="GameHeader">
@@ -21,11 +24,20 @@ const Game = () => {
         <p>Flag Bomb Count: {flagCount}</p>
         <button onClick={resetGame}>Reset</button>
       </div>
-      {gameOver && <h2>{gameOver && <h2>{win ? "Game over! You Won!" : "Game over! You lost!"}</h2>}</h2>}
+      {gameOver && <h2>{
+                          gameOver && 
+                          <h2>{
+                            win ? "Game over! You Won!" : "Game over! You lost!"
+                            }
+                          </h2>
+                        }
+                    </h2>
+        }
       <div
         className="GameBoard"
         style={{
-          gridTemplateColumns: `repeat(${gameBoard[0]?.length || 0}, 30px)`,
+          gridTemplateColumns: `repeat(${cols}, 1fr)`,
+          gridTemplateRows: `repeat(${rows}, 1fr)`,
         }}
       >
         {gameBoard.map((row, rowIndex) =>

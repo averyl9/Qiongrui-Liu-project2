@@ -1,15 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { openDB } from "idb";
 
 export const GameContext = createContext();
-
-  // Extra Credit: Saved Data
-  const dbPromise = openDB("MinesweeperDB", 1, {
-    upgrade(db) {
-      db.createObjectStore("gameState"); 
-    },
-  });
 
 export const GameProvider = ({ children }) => {
   const {difficulty: routeDifficulty } = useParams();
@@ -76,42 +68,11 @@ export const GameProvider = ({ children }) => {
     setFlagCount(0);
   };
 
-  // Save game state to IndexedDB
-  const saveGameState = async () => {
-    if (gameBoard.length === 0) return;
-    const state = {
-      gameBoard,
-      gameOver,
-      win,
-      difficulty,
-      flagCount,
-    };
-    const db = await dbPromise;
-    await db.put("gameState", state, "currentGame");
-  };
-
-  const loadGameState = async () => {
-    const db = await dbPromise;
-    const savedState = await db.get("gameState", "currentGame");
-    if (savedState) {
-      const { gameBoard, gameOver, win, difficulty, flagCount } = savedState;
-      setGameBoard(gameBoard);
-      setGameOver(gameOver);
-      setWin(win);
-      setDifficulty(difficulty);
-      setFlagCount(flagCount);
-    } else {
-      const { rows, cols, mines } = difficulties[difficulty];
-      initializeBoard(rows, cols, mines);
-    }
-  };
-
-  const resetGame = async () => {
+  
+  const resetGame = () => {
     const { rows, cols, mines } = difficulties[difficulty];
     initializeBoard(rows, cols, mines);
 
-    const db = await dbPromise;
-    await db.delete("gameState", "currentGame"); 
   };
 
   const checkWinCondition = () => {
@@ -185,30 +146,11 @@ export const GameProvider = ({ children }) => {
       ? routeDifficulty
       : "easy";
   
-    const loadOrInitialize = async () => {
-      // load saved state
-      const savedState = await loadGameState(); 
-      if (!savedState || savedState.difficulty !== selectedDifficulty) {
-        const { rows, cols, mines } = difficulties[selectedDifficulty];
-        // create new board if no saved state
-        initializeBoard(rows, cols, mines); 
-      }
-      // update difficulty level
-      setDifficulty(selectedDifficulty); 
-    };
-  
-    loadOrInitialize();
+    const { rows, cols, mines } = difficulties[selectedDifficulty];
+    initializeBoard(rows, cols, mines);
+    setDifficulty(selectedDifficulty);
   }, [routeDifficulty]);
   
-  useEffect(() => {
-    const saveState = async () => {
-      await saveGameState();
-    };
-    saveState();
-  }, [gameBoard, gameOver, win, flagCount]);
-
-
-
   return (
     <GameContext.Provider
       value={{
