@@ -11,6 +11,7 @@ export const GameProvider = ({ children }) => {
   const [difficulty, setDifficulty] = useState("easy");
   const [flagCount, setFlagCount] = useState(0);
 
+  // 3 difficulty level
   const difficulties = {
     easy: { rows: 8, cols: 8, mines: 10 },
     medium: { rows: 16, cols: 16, mines: 40 },
@@ -26,7 +27,6 @@ export const GameProvider = ({ children }) => {
         neighborMines: 0,
       }))
     );
-
 
     // Place mines
     let mineCount = 0;
@@ -44,17 +44,30 @@ export const GameProvider = ({ children }) => {
       for (let col = 0; col < cols; col++) {
         if (!board[row][col].isMine) {
           const neighbors = [
+            // top left
             [row - 1, col - 1],
+            // top
             [row - 1, col],
+            // top right
             [row - 1, col + 1],
+            // left
             [row, col - 1],
+            // right
             [row, col + 1],
+            // bottom left
             [row + 1, col - 1],
+            // bottom
             [row + 1, col],
+            // bottom right
             [row + 1, col + 1],
           ];
           board[row][col].neighborMines = neighbors.reduce((count, [r, c]) => {
-            if (r >= 0 && r < rows && c >= 0 && c < cols && board[r][c].isMine) {
+            // check if neighbor cell pos is valid(not exceeds board) and has mine
+            if (r >= 0 && 
+                r < rows && 
+                c >= 0 && 
+                c < cols && 
+                board[r][c].isMine) {
               count++;
             }
             return count;
@@ -68,9 +81,9 @@ export const GameProvider = ({ children }) => {
     setFlagCount(0);
   };
 
-  
+
   const resetGame = () => {
-    const { rows, cols, mines } = difficulties[difficulty];
+    const {rows, cols, mines} = difficulties[difficulty];
     initializeBoard(rows, cols, mines);
 
   };
@@ -87,7 +100,7 @@ export const GameProvider = ({ children }) => {
 
   const handleCellClick = (row, col) => {
     if (gameOver || gameBoard[row][col].isRevealed) return;
-
+    // get a copy of curret game board
     const newBoard = gameBoard.map((r) =>
       r.map((cell) => ({ ...cell }))
     );
@@ -102,15 +115,17 @@ export const GameProvider = ({ children }) => {
         revealEmptyCells(newBoard, row, col);
       }
     }
-
+    // update game state with new board
     setGameBoard(newBoard);
     checkWinCondition();
   };
 
   // Extra Credit: Auto Clear
   const revealEmptyCells = (board, row, col) => {
+    // contain clicked cell
     const stack = [[row, col]];
     while (stack.length) {
+      // pop most recent cell
       const [r, c] = stack.pop();
       const neighbors = [
         [r - 1, c - 1],
@@ -146,7 +161,7 @@ export const GameProvider = ({ children }) => {
       ? routeDifficulty
       : "easy";
   
-    const { rows, cols, mines } = difficulties[selectedDifficulty];
+    const {rows, cols, mines} = difficulties[selectedDifficulty];
     initializeBoard(rows, cols, mines);
     setDifficulty(selectedDifficulty);
   }, [routeDifficulty]);

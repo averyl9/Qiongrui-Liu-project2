@@ -8,9 +8,6 @@ const Home = () => (
       <h1>Minesweeper Game</h1>
     </header>
     <nav className="HomeNav">
-      <NavLink to="/rules" className="HomeLink">
-        View Rules
-      </NavLink>
       <NavLink to="/game/easy" className="HomeLink">
         Play Game
       </NavLink>

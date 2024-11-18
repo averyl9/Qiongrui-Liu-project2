@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { GameContext } from "./GameProvider";
 import "./Cell.css";
 
+// Child Component
 const Cell = ({ row, col }) => {
   // use state management tool to pass data
   const { gameBoard, 

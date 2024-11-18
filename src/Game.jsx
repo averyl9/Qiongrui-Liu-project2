@@ -36,13 +36,15 @@ const Game = () => {
       <div
         className="GameBoard"
         style={{
+          // customize col and row based on difficulty level
           gridTemplateColumns: `repeat(${cols}, 1fr)`,
           gridTemplateRows: `repeat(${rows}, 1fr)`,
         }}
       >
         {gameBoard.map((row, rowIndex) =>
           row.map((cell, colIndex) => (
-            <Cell key={`${rowIndex}-${colIndex}`} row={rowIndex} col={colIndex} />
+            // use key as sepcial props for list rendering
+            <Cell key={`${rowIndex}-${colIndex}`} row={rowIndex} col={colIndex} cell={cell}/>
           ))
         )}
       </div>
