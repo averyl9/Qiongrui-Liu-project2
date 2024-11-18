@@ -184,20 +184,28 @@ export const GameProvider = ({ children }) => {
     const selectedDifficulty = validDifficulties.includes(routeDifficulty)
       ? routeDifficulty
       : "easy";
-    setDifficulty(selectedDifficulty);
   
     const loadOrInitialize = async () => {
-      // Load saved game state if available
-      await loadGameState(); 
+      // load saved state
+      const savedState = await loadGameState(); 
+      if (!savedState || savedState.difficulty !== selectedDifficulty) {
+        const { rows, cols, mines } = difficulties[selectedDifficulty];
+        // create new board if no saved state
+        initializeBoard(rows, cols, mines); 
+      }
+      // update difficulty level
+      setDifficulty(selectedDifficulty); 
     };
-
+  
     loadOrInitialize();
   }, [routeDifficulty]);
-
-  // Save game state whenever it changes
+  
   useEffect(() => {
-    saveGameState();
-  }, [gameBoard, gameOver, win, difficulty, flagCount]);
+    const saveState = async () => {
+      await saveGameState();
+    };
+    saveState();
+  }, [gameBoard, gameOver, win, flagCount]);
 
 
 
