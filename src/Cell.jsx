@@ -9,8 +9,8 @@ const Cell = ({ row, col }) => {
           setGameBoard, 
           handleCellClick, 
           gameOver, 
-          setFlagCount, 
-          flagCount 
+          bombsLeft,
+          setBombsLeft
         } = useContext(GameContext);
         
   const cell = gameBoard[row][col];
@@ -23,6 +23,7 @@ const Cell = ({ row, col }) => {
   const handleRightClick = (e) => {
     e.preventDefault(); 
     e.stopPropagation();
+
     if (cell.isRevealed || gameOver) return;
 
     const updatedBoard = gameBoard.map((row) =>
@@ -32,13 +33,12 @@ const Cell = ({ row, col }) => {
     // toggle the flag state
     updatedBoard[row][col].isFlagged = !updatedBoard[row][col].isFlagged;
 
-    // update the flag count
-    const newFlagCount = flagCount + (updatedBoard[row][col].isFlagged ? 1 : -1);
-    setFlagCount(newFlagCount);
+    // update the bombs Left
+    const newBombsLeft = bombsLeft + (updatedBoard[row][col].isFlagged ? -1 : 1);
+    setBombsLeft(newBombsLeft);
 
     setGameBoard(updatedBoard); 
-
-  };
+    }
 
   return (
     <div

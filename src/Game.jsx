@@ -10,7 +10,7 @@ const Game = () => {
     difficulty,
     gameOver,
     win,
-    flagCount,
+    bombsLeft,
   } = useContext(GameContext);
 
   const rows = gameBoard.length;
@@ -21,7 +21,7 @@ const Game = () => {
       <div className="GameHeader">
         <h1>Minesweeper</h1>
         <p>Current Difficulty Mode: {difficulty}</p>
-        <p>Flag Bomb Count: {flagCount}</p>
+        <p>Bomb Left Count: {bombsLeft}</p>
         <button onClick={resetGame}>Reset</button>
       </div>
       {gameOver && <h2>{

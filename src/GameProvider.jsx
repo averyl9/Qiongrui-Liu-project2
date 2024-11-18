@@ -9,7 +9,8 @@ export const GameProvider = ({ children }) => {
   const [gameOver, setGameOver] = useState(false);
   const [win, setWin] = useState(false);
   const [difficulty, setDifficulty] = useState("easy");
-  const [flagCount, setFlagCount] = useState(0);
+  // Extra credit:Flag Bomb Function
+  const [bombsLeft, setBombsLeft] = useState(0);
 
   // 3 difficulty level
   const difficulties = {
@@ -17,6 +18,7 @@ export const GameProvider = ({ children }) => {
     medium: { rows: 16, cols: 16, mines: 40 },
     hard: { rows: 30, cols: 16, mines: 99 },
   };
+
 
   const initializeBoard = (rows, cols, mines) => {
     const board = Array.from({ length: rows }, () =>
@@ -76,16 +78,16 @@ export const GameProvider = ({ children }) => {
       }
     }
     setGameBoard(board);
+    setBombsLeft(mines);
     setGameOver(false);
     setWin(false);
-    setFlagCount(0);
   };
 
 
   const resetGame = () => {
     const {rows, cols, mines} = difficulties[difficulty];
     initializeBoard(rows, cols, mines);
-
+    setBombsLeft(mines); 
   };
 
   const checkWinCondition = () => {
@@ -178,8 +180,8 @@ export const GameProvider = ({ children }) => {
         resetGame,
         difficulty,
         handleCellClick,
-        flagCount, 
-        setFlagCount,
+        bombsLeft, 
+        setBombsLeft
       }}
     >
       {children}
