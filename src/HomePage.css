@@ -6,7 +6,7 @@
 
 .HomeHeader h1 {
   font-size: 36px;
-  color: #2c3e50;
+  color: #283a4c;
 }
 
 .HomeNav {
@@ -17,12 +17,12 @@
   display: inline-block;
   margin: 10px;
   padding: 10px 20px;
-  font-size: 18px;
+  font-size: 16px;
   text-decoration: none;
   color: white;
   background-color: #4477ef;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.4s ease;
 }
 
 .HomeLink:hover {

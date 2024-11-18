@@ -29,10 +29,10 @@ const Cell = ({ row, col }) => {
       row.map((c) => ({ ...c }))
     );
 
-    // Toggle the flag state
+    // toggle the flag state
     updatedBoard[row][col].isFlagged = !updatedBoard[row][col].isFlagged;
 
-    // Update the flag count
+    // update the flag count
     const newFlagCount = flagCount + (updatedBoard[row][col].isFlagged ? 1 : -1);
     setFlagCount(newFlagCount);
 
