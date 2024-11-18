@@ -127,6 +127,7 @@ export const GameProvider = ({ children }) => {
     while (stack.length) {
       // pop most recent cell
       const [r, c] = stack.pop();
+      // get neighbors of current cell
       const neighbors = [
         [r - 1, c - 1],
         [r - 1, c],
